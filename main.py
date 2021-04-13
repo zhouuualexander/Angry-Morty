@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import time
 
 
 class Morty:
@@ -9,6 +10,7 @@ class Morty:
             "resources/rickandmorty/morty.png").convert()
         self.block_x = 200
         self.block_y = 100
+        self.direction = None
 
     def draw(self):
         self.parent_screen.fill((255, 255, 255))
@@ -16,19 +18,26 @@ class Morty:
         pygame.display.flip()
 
     def move_up(self):
-        self.block_y -= 10
-        self.draw()
+        self.direction = 'up'
 
     def move_down(self):
-        self.block_y += 10
-        self.draw()
+        self.direction = 'down'
 
     def move_left(self):
-        self.block_x -= 10
-        self.draw()
+        self.direction = 'left'
 
     def move_right(self):
-        self.block_x += 10
+        self.direction = 'right'
+
+    def walk(self):
+        if self.direction == 'up':
+            self.block_y -= 10
+        if self.direction == 'down':
+            self.block_y += 10
+        if self.direction == 'left':
+            self.block_x -= 10
+        if self.direction == 'right':
+            self.block_x += 10
         self.draw()
 
 
@@ -62,6 +71,8 @@ class Game:
 
                 elif event.type == QUIT:
                     running = False
+            self.morty.walk()
+            time.sleep(0.2)
 
 
 if __name__ == '__main__':
