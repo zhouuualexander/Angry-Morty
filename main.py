@@ -6,20 +6,38 @@ SIZE = 44
 
 
 class Rick:
+    """Object Rick
+    """
+
     def __init__(self, parent_screen):
+        """Initialize Object Rick and set the first position on the screen
+
+        Args:
+            parent_screen (surface): pygame surface(the screen)
+        """
+        # load image of Rick
         self.rick = pygame.image.load(
             "resources/rickandmorty/rick.png").convert()
+        # Initialize parent_screen
         self.parent_screen = parent_screen
+        # Set the position of Rick
         self.block_x = SIZE*3
         self.block_y = SIZE*3
 
     def move(self):
+        """Move Rick to a random position when Morty ate a Rick
+        """
+        # Set the position of Rick randomly
         self.block_x = random.randint(0, 10)*SIZE
         self.block_y = random.randint(0, 10)*SIZE
 
     def draw(self):
+        """Draw a Rick on the screen
+        """
+        # Set Rick on the screen with position
         self.parent_screen.blit(
             self.rick, (self.block_x, self.block_y))
+        # Update the screen
         pygame.display.flip()
 
 
