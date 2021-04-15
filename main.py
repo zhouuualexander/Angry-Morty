@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import time
+import random
 SIZE = 44
 
 
@@ -11,6 +12,10 @@ class Rick:
         self.parent_screen = parent_screen
         self.block_x = SIZE*3
         self.block_y = SIZE*3
+
+    def move(self):
+        self.block_x = random.randint(0, 10)*SIZE
+        self.block_y = random.randint(0, 10)*SIZE
 
     def draw(self):
         self.parent_screen.blit(
@@ -27,6 +32,11 @@ class Morty:
         self.block_x = [SIZE]*length
         self.block_y = [SIZE]*length
         self.direction = 'down'
+
+    def increace_length(self):
+        self.length += 1
+        self.block_x.append(-1)
+        self.block_y.append(-1)
 
     def draw(self):
         self.parent_screen.fill((255, 255, 255))
@@ -72,14 +82,31 @@ class Game:
             "resources/rickandmorty/rickandmorty_beginning.mp3")
         pygame.mixer.music.play()
         pygame.mixer.music.set_volume(0.1)
-        self.morty = Morty(self.surface, 16)
+        self.morty = Morty(self.surface, 1)
         self.morty.draw()
         self.rick = Rick(self.surface)
         self.rick.draw()
 
+    def is_collision(self, x1, y1, x2, y2):
+        if x1 >= x2 and x1 < x2+SIZE:
+            if y1 >= y2 and y1 < y2+SIZE:
+                return True
+        return False
+
     def play(self):
         self.morty.walk()
         self.rick.draw()
+        self.display_score()
+        pygame.display.flip()
+        if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.rick.block_x, self.rick.block_y):
+            self.morty.increace_length()
+            self.rick.move()
+
+    def display_score(self):
+        font = pygame.font.SysFont('Get Schwifty', 30)
+        score = font.render(
+            f"Score: {self.morty.length}", True, (0, 0, 0))
+        self.surface.blit(score, (1300, 20))
 
     def run(self):
         running = True
