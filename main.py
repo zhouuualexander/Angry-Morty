@@ -105,8 +105,8 @@ class Game:
     def display_score(self):
         font = pygame.font.SysFont('Get Schwifty', 30)
         score = font.render(
-            f"Score: {self.morty.length}", True, (0, 0, 0))
-        self.surface.blit(score, (1300, 20))
+            f"Morty eat: {self.morty.length-1} Rick", True, (0, 0, 0))
+        self.surface.blit(score, (1100, 20))
 
     def run(self):
         running = True
