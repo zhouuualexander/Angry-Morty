@@ -11,7 +11,6 @@ class Rick:
 
     def __init__(self, parent_screen):
         """Initialize Object Rick and set the first position on the screen
-
         Args:
             parent_screen (surface): pygame surface(the screen)
         """
@@ -43,6 +42,7 @@ class Rick:
 
 class Morty:
     def __init__(self, parent_screen, length):
+        
         self.length = length
         self.parent_screen = parent_screen
         self.block = pygame.image.load(
@@ -99,7 +99,6 @@ class Game:
         pygame.mixer.init()
         self.surface.fill((255, 255, 255))
         self.play_background_music()
-
         self.morty = Morty(self.surface, 1)
         self.morty.draw()
         self.rick = Rick(self.surface)
@@ -140,8 +139,13 @@ class Game:
 
     def display_score(self):
         font = pygame.font.SysFont('Get Schwifty', 30)
+        numberRicks = self.morty.length-1
+        if numberRicks>1:
+            score = font.render(
+                f"Morty eat: {numberRicks} Ricks", True, (0, 0, 0))
+            self.surface.blit(score, (1100, 20))
         score = font.render(
-            f"Morty eat: {self.morty.length-1} Rick", True, (0, 0, 0))
+                f"Morty eat: {numberRicks} Rick", True, (0, 0, 0))
         self.surface.blit(score, (1100, 20))
 
     def play_sound(self, sound):
