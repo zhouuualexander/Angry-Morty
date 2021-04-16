@@ -12,7 +12,6 @@
   - [Description](#description)
       - [Technologies](#technologies)
   - [How To Use](#how-to-use)
-      - [Installation](#installation)
   - [References](#references)
   - [License](#license)
 
@@ -34,12 +33,12 @@ The code is modified and learnt from [freeCodeCamp](https://www.freecodecamp.org
 
 ## How To Use
 
-#### Installation
 
 ```html
     git clone this repository
     install python 3.7.3 
     install pygame 2.0.1
+    python3 crazymorty.py
     
 ```
 [Back To The Top](#Pygame----Crazy-Morty)
