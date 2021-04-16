@@ -49,6 +49,7 @@ class Morty:
             "resources/rickandmorty/morty.png").convert()
         self.block_x = [SIZE]*length
         self.block_y = [SIZE]*length
+
         self.direction = 'down'
 
     def increace_length(self):
@@ -97,11 +98,9 @@ class Game:
         self.surface = pygame.display.set_mode(size=(1500, 1000))
         pygame.mixer.init()
         self.surface.fill((255, 255, 255))
-        self.beginning = pygame.mixer.music.load(
-            "resources/rickandmorty/rickandmorty_beginning.mp3")
-        pygame.mixer.music.play()
-        pygame.mixer.music.set_volume(0.1)
-        self.morty = Morty(self.surface, 1)
+        self.play_background_music()
+
+        self.morty = Morty(self.surface, 10)
         self.morty.draw()
         self.rick = Rick(self.surface)
         self.rick.draw()
@@ -112,14 +111,32 @@ class Game:
                 return True
         return False
 
+    def play_background_music(self):
+        pygame.mixer.music.load(
+            "resources/rickandmorty/rickandmorty_beginning.mp3")
+        pygame.mixer.music.play()
+        pygame.mixer.music.set_volume(0.1)
+
     def play(self):
         self.morty.walk()
         self.rick.draw()
         self.display_score()
         pygame.display.flip()
+        # Morty killing Rick
         if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.rick.block_x, self.rick.block_y):
+            self.play_sound("DEVIL")
             self.morty.increace_length()
             self.rick.move()
+        # Morty killing himself
+        for i in range(3, self.morty.length):
+            if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.morty.block_x[i], self.morty.block_y[i]):
+                self.play_sound("LOSE")
+                raise "game over"
+        # Rick colliding with the boundries of the window
+        if not (0 <= self.morty.block_x[0] <= 1500 and 0 <= self.morty.block_y[0] <= 1000):
+            self.play_sound('LOSE')
+            print("???")
+            raise "Hit the boundry error"
 
     def display_score(self):
         font = pygame.font.SysFont('Get Schwifty', 30)
@@ -127,13 +144,45 @@ class Game:
             f"Morty eat: {self.morty.length-1} Rick", True, (0, 0, 0))
         self.surface.blit(score, (1100, 20))
 
+    def play_sound(self, sound):
+        sound = pygame.mixer.Sound(f"resources/rickandmorty/{sound}.mp3")
+        pygame.mixer.Sound.play(sound)
+
+    def show_game_over(self):
+        self.surface.fill((255, 255, 255))
+        font = pygame.font.SysFont('arial', 30)
+        line1 = font.render(
+            f"Wubba Lubba Dub-Dub!!! You just kill {self.morty.length-1} Rick", True, (
+                0, 0, 0))
+        self.surface.blit(line1, (500, 400))
+        line2 = font.render(
+            "To kill Rick again press Enter. To give up press Escape!", True, (
+                0, 0, 0)
+        )
+        self.surface.blit(line2, (450, 450))
+        pygame.display.flip()
+
+        pygame.mixer.music.pause()
+
+    def reset(self):
+        self.morty = Morty(self.surface, 1)
+        self.rick = Rick(self.surface)
+
     def run(self):
         running = True
+        pause = False
         while running:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
+                        self.play_sound("GIVEUP")
+                        time.sleep(5)
                         running = False
+                    if event.key == K_RETURN:
+                        self.play_sound("KILL")
+                        time.sleep(2)
+                        pygame.mixer.music.unpause()
+                        pause = False
                     if event.key == K_RIGHT:
                         self.morty.move_right()
                     if event.key == K_LEFT:
@@ -144,8 +193,18 @@ class Game:
                         self.morty.move_down()
 
                 elif event.type == QUIT:
+                    self.play_sound("QUIT")
+                    time.sleep(4)
                     running = False
-            self.play()
+            try:
+                if not pause:
+                    self.play()
+            except Exception as e:
+                self.show_game_over()
+                time.sleep(5)
+                self.play_sound("GAMEOVER")
+                pause = True
+                self.reset()
             time.sleep(0.3)
 
 
