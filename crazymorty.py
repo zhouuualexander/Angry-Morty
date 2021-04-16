@@ -100,7 +100,7 @@ class Game:
         self.surface.fill((255, 255, 255))
         self.play_background_music()
 
-        self.morty = Morty(self.surface, 10)
+        self.morty = Morty(self.surface, 1)
         self.morty.draw()
         self.rick = Rick(self.surface)
         self.rick.draw()
