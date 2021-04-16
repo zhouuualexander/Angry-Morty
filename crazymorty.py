@@ -136,6 +136,17 @@ class Game:
             self.play_sound('LOSE')
             print("???")
             raise "Hit the boundry error"
+    def pause(self):
+        self.surface.fill((255, 255, 255))
+        font = pygame.font.SysFont('arial', 30)
+        line1 = font.render(
+            f"Pause for a second and press Enter to continue", True, (
+                0, 0, 0))
+        self.surface.blit(line1, (500, 400))
+        
+        pygame.display.flip()
+
+        pygame.mixer.music.pause()
 
     def display_score(self):
         font = pygame.font.SysFont('Get Schwifty', 30)
@@ -178,6 +189,10 @@ class Game:
         while running:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
+                    if event.key == K_SPACE:
+                        self.pause()
+                        self.play_sound("PAUSE")
+                        pause = True
                     if event.key == K_ESCAPE:
                         self.play_sound("GIVEUP")
                         time.sleep(5)
