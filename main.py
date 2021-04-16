@@ -95,6 +95,7 @@ class Game:
         pygame.init()
         pygame.display.set_caption('Crazy Morty')
         self.surface = pygame.display.set_mode(size=(1500, 1000))
+        pygame.mixer.init()
         self.surface.fill((255, 255, 255))
         self.beginning = pygame.mixer.music.load(
             "resources/rickandmorty/rickandmorty_beginning.mp3")
