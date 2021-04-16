@@ -187,13 +187,13 @@ class Game:
                         time.sleep(2)
                         pygame.mixer.music.unpause()
                         pause = False
-                    if event.key == K_RIGHT:
+                    if event.key == K_RIGHT or event.key == K_d:
                         self.morty.move_right()
-                    if event.key == K_LEFT:
+                    if event.key == K_LEFT or event.key == K_a:
                         self.morty.move_left()
-                    if event.key == K_UP:
+                    if event.key == K_UP or event.key == K_w:
                         self.morty.move_up()
-                    if event.key == K_DOWN:
+                    if event.key == K_DOWN or event.key == K_s:
                         self.morty.move_down()
 
                 elif event.type == QUIT:
