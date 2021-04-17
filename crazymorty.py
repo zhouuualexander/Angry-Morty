@@ -157,7 +157,7 @@ class Game:
                 f"Morty killed: {numberRicks} Ricks", True, (0, 0, 0))
             self.surface.blit(score, (1100, 20))
         score = font.render(
-                f"Morty eat: {numberRicks} Rick", True, (0, 0, 0))
+                f"Morty killed: {numberRicks} Rick", True, (0, 0, 0))
         self.surface.blit(score, (1100, 20))
     def play_rick_sound(self,sound):
         sound = pygame.mixer.Sound(f"resources/rick_sounds/{sound}.mp3")
