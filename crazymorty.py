@@ -71,47 +71,64 @@ class Morty:
 
     def move_up(self):
         self.direction = 'up'
+        
         if self.length>1:
             self.right = True
             self.left = True
             self.up = True
             self.down = False
+        
+
 
     def move_down(self):
         self.direction = 'down'
+        
         if self.length>1:
             self.right = True
             self.left = True
             self.up = False
             self.down = True
+        
 
     def move_left(self):
         self.direction = 'left'
+        
         if self.length>1:
             self.right = False
             self.left = True
             self.up = True
             self.down = True
+       
 
     def move_right(self):
         self.direction = 'right'
+        
         if self.length>1:
             self.right = True
             self.left = False
             self.up = True
             self.down = True
+        
 
     def walk(self):
         for i in range(self.length-1, 0, -1):
             self.block_x[i] = self.block_x[i-1]
             self.block_y[i] = self.block_y[i-1]
         if self.direction == 'up':
+            if self.length>1:
+                self.down = False
             self.block_y[0] -= SIZE
         if self.direction == 'down':
+            if self.length>1:
+                self.up = False
             self.block_y[0] += SIZE
         if self.direction == 'left':
+            if self.length>1:
+                self.right = False
             self.block_x[0] -= SIZE
         if self.direction == 'right':
+            if self.length>1:
+                self.left = False
             self.block_x[0] += SIZE
         self.draw()
 
@@ -155,6 +172,7 @@ class Game:
         pygame.mixer.music.set_volume(0.1)
 
     def play(self):
+        
         if self.morty.length-1 > self.best_score:
                 self.best_score = self.morty.length-1
                 
@@ -177,7 +195,6 @@ class Game:
         # Rick colliding with the boundries of the window
         if not (0 <= self.morty.block_x[0] <= 1500 and 0 <= self.morty.block_y[0] <= 1000):
             self.play_sound('LOSE')
-            print("???")
             raise "Hit the boundry error"
     def pause(self):
         self.surface.fill((255, 255, 255))
