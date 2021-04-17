@@ -51,6 +51,10 @@ class Morty:
         self.block_y = [SIZE+10]*length
 
         self.direction = 'down'
+        self.right = True
+        self.left = True
+        self.up = True
+        self.down = True
 
     def increace_length(self):
         self.length += 1
@@ -67,15 +71,35 @@ class Morty:
 
     def move_up(self):
         self.direction = 'up'
+        if self.length>1:
+            self.right = True
+            self.left = True
+            self.up = True
+            self.down = False
 
     def move_down(self):
         self.direction = 'down'
+        if self.length>1:
+            self.right = True
+            self.left = True
+            self.up = False
+            self.down = True
 
     def move_left(self):
         self.direction = 'left'
+        if self.length>1:
+            self.right = False
+            self.left = True
+            self.up = True
+            self.down = True
 
     def move_right(self):
         self.direction = 'right'
+        if self.length>1:
+            self.right = True
+            self.left = False
+            self.up = True
+            self.down = True
 
     def walk(self):
         for i in range(self.length-1, 0, -1):
@@ -242,13 +266,17 @@ class Game:
                         pygame.mixer.music.unpause()
                         pause = False
                     if event.key == K_RIGHT or event.key == K_d:
-                        self.morty.move_right()
+                        if self.morty.right:
+                            self.morty.move_right()
                     if event.key == K_LEFT or event.key == K_a:
-                        self.morty.move_left()
+                        if self.morty.left:
+                            self.morty.move_left()
                     if event.key == K_UP or event.key == K_w:
-                        self.morty.move_up()
+                        if self.morty.up:
+                            self.morty.move_up()
                     if event.key == K_DOWN or event.key == K_s:
-                        self.morty.move_down()
+                        if self.morty.down:
+                            self.morty.move_down()
 
                 elif event.type == QUIT:
                     self.play_sound("QUIT")
