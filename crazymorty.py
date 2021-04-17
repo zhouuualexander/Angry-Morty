@@ -103,6 +103,7 @@ class Game:
         self.morty.draw()
         self.rick = Rick(self.surface)
         self.rick.draw()
+        self.best_score = 0
 
     def is_collision(self, x1, y1, x2, y2):
         if x1 >= x2 and x1 < x2+SIZE:
@@ -117,6 +118,8 @@ class Game:
         pygame.mixer.music.set_volume(0.1)
 
     def play(self):
+        if self.morty.length-1 > self.best_score:
+                self.best_score = self.morty.length-1
         self.morty.walk()
         self.rick.draw()
         self.display_score()
@@ -127,6 +130,7 @@ class Game:
             self.play_rick_sound(rick_sounds)
             self.morty.increace_length()
             self.rick.move()
+            
         # Morty killing himself
         for i in range(3, self.morty.length):
             if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.morty.block_x[i], self.morty.block_y[i]):
@@ -159,6 +163,16 @@ class Game:
         score = font.render(
                 f"Morty killed: {numberRicks} Rick", True, (0, 0, 0))
         self.surface.blit(score, (1100, 20))
+
+        best = font.render(
+                f"Best killed {self.best_score} ", True, (0,0,0)
+        )
+        self.surface.blit(best, (1100, 70))
+        
+        
+
+
+
     def play_rick_sound(self,sound):
         sound = pygame.mixer.Sound(f"resources/rick_sounds/{sound}.mp3")
         pygame.mixer.Sound.play(sound)
@@ -167,10 +181,12 @@ class Game:
         pygame.mixer.Sound.play(sound)
 
     def show_game_over(self):
+        if self.morty.length-1 > self.best_score:
+            self.best_score = self.morty.length-1
         self.surface.fill((255, 255, 255))
         font = pygame.font.SysFont('arial', 30)
         line1 = font.render(
-            f"Wubba Lubba Dub-Dub!!! You just kill {self.morty.length-1} Rick", True, (
+            f"Wubba Lubba Dub-Dub!!! You just killed {self.morty.length-1} Rick", True, (
                 0, 0, 0))
         self.surface.blit(line1, (500, 400))
         line2 = font.render(
