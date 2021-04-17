@@ -123,7 +123,8 @@ class Game:
         pygame.display.flip()
         # Morty killing Rick
         if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.rick.block_x, self.rick.block_y):
-            self.play_sound("DEVIL")
+            rick_sounds = str(random.randint(1, 13))
+            self.play_rick_sound(rick_sounds)
             self.morty.increace_length()
             self.rick.move()
         # Morty killing himself
@@ -153,12 +154,14 @@ class Game:
         numberRicks = self.morty.length-1
         if numberRicks>1:
             score = font.render(
-                f"Morty eat: {numberRicks} Ricks", True, (0, 0, 0))
+                f"Morty killed: {numberRicks} Ricks", True, (0, 0, 0))
             self.surface.blit(score, (1100, 20))
         score = font.render(
                 f"Morty eat: {numberRicks} Rick", True, (0, 0, 0))
         self.surface.blit(score, (1100, 20))
-
+    def play_rick_sound(self,sound):
+        sound = pygame.mixer.Sound(f"resources/rick_sounds/{sound}.mp3")
+        pygame.mixer.Sound.play(sound)
     def play_sound(self, sound):
         sound = pygame.mixer.Sound(f"resources/rickandmorty/{sound}.mp3")
         pygame.mixer.Sound.play(sound)
