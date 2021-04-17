@@ -103,7 +103,17 @@ class Game:
         self.morty.draw()
         self.rick = Rick(self.surface)
         self.rick.draw()
-        self.best_score = 0
+        
+        try:
+            self.f = open("best_score.txt", "r")
+            self.best_score = int(self.f.read())
+            self.f.close()
+        except:
+            self.f = open("best_score.txt", "w")
+            self.f.write('0')
+            self.best_score = 0
+            self.f.close()
+
 
     def is_collision(self, x1, y1, x2, y2):
         if x1 >= x2 and x1 < x2+SIZE:
@@ -120,6 +130,7 @@ class Game:
     def play(self):
         if self.morty.length-1 > self.best_score:
                 self.best_score = self.morty.length-1
+                
         self.morty.walk()
         self.rick.draw()
         self.display_score()
@@ -183,6 +194,10 @@ class Game:
     def show_game_over(self):
         if self.morty.length-1 > self.best_score:
             self.best_score = self.morty.length-1
+        f = open("best_score.txt", "w")
+        f.write(str(self.best_score))
+        f.close()
+
         self.surface.fill((255, 255, 255))
         font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         line1 = font.render(
@@ -203,6 +218,8 @@ class Game:
         self.rick = Rick(self.surface)
 
     def run(self):
+        
+        # print(self.f.read())
         running = True
         pause = False
         while running:
