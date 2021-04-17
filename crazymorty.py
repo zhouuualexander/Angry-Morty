@@ -143,7 +143,7 @@ class Game:
             raise "Hit the boundry error"
     def pause(self):
         self.surface.fill((255, 255, 255))
-        font = pygame.font.SysFont('arial', 30)
+        font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         line1 = font.render(
             f"Pause for a second and press Enter to continue", True, (
                 0, 0, 0))
@@ -154,7 +154,7 @@ class Game:
         pygame.mixer.music.pause()
 
     def display_score(self):
-        font = pygame.font.SysFont('Get Schwifty', 30)
+        font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         numberRicks = self.morty.length-1
         if numberRicks>1:
             score = font.render(
@@ -184,7 +184,7 @@ class Game:
         if self.morty.length-1 > self.best_score:
             self.best_score = self.morty.length-1
         self.surface.fill((255, 255, 255))
-        font = pygame.font.SysFont('arial', 30)
+        font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         line1 = font.render(
             f"Wubba Lubba Dub-Dub!!! You just killed {self.morty.length-1} Rick", True, (
                 0, 0, 0))
