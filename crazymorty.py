@@ -20,15 +20,15 @@ class Rick:
         # Initialize parent_screen
         self.parent_screen = parent_screen
         # Set the position of Rick
-        self.block_x = SIZE*3
-        self.block_y = SIZE*3
+        self.block_x = SIZE*3+10
+        self.block_y = SIZE*3+10
 
     def move(self):
         """Move Rick to a random position when Morty ate a Rick
         """
         # Set the position of Rick randomly
-        self.block_x = random.randint(0, 10)*SIZE
-        self.block_y = random.randint(0, 10)*SIZE
+        self.block_x = random.randint(0, 10)*SIZE+10
+        self.block_y = random.randint(0, 10)*SIZE+10
 
     def draw(self):
         """Draw a Rick on the screen
@@ -47,8 +47,8 @@ class Morty:
         self.parent_screen = parent_screen
         self.block = pygame.image.load(
             "resources/rickandmorty/morty.png").convert()
-        self.block_x = [SIZE]*length
-        self.block_y = [SIZE]*length
+        self.block_x = [SIZE+10]*length
+        self.block_y = [SIZE+10]*length
 
         self.direction = 'down'
 
@@ -59,6 +59,7 @@ class Morty:
 
     def draw(self):
         self.parent_screen.fill((255, 255, 255))
+        pygame.draw.rect(self.parent_screen,(0,0,0),(0,0,1500,1000),10)
         for i in range(self.length):
             self.parent_screen.blit(
                 self.block, (self.block_x[i], self.block_y[i]))
@@ -97,6 +98,8 @@ class Game:
         pygame.display.set_caption('Crazy Morty')
         self.surface = pygame.display.set_mode(size=(1500, 1000))
         pygame.mixer.init()
+        
+        
         self.surface.fill((255, 255, 255))
         self.play_background_music()
         self.morty = Morty(self.surface, 1)
@@ -198,15 +201,15 @@ class Game:
         f.write(str(self.best_score))
         f.close()
 
-        self.surface.fill((255, 255, 255))
+        self.surface.fill((0, 0, 0))
         font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         line1 = font.render(
             f"Wubba Lubba Dub-Dub!!! You just killed {self.morty.length-1} Rick", True, (
-                0, 0, 0))
+                255, 255, 255))
         self.surface.blit(line1, (500, 400))
         line2 = font.render(
             "To kill Rick again press Enter. To give up press Escape!", True, (
-                0, 0, 0)
+                255, 255, 255)
         )
         self.surface.blit(line2, (450, 450))
         pygame.display.flip()
