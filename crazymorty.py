@@ -20,8 +20,8 @@ class Rick:
         # Initialize parent_screen
         self.parent_screen = parent_screen
         # Set the position of Rick
-        self.block_x = SIZE*3+10
-        self.block_y = SIZE*3+10
+        self.block_x = random.randint(3, 24)*SIZE+10
+        self.block_y = random.randint(3, 17)*SIZE+10
 
     def move(self):
         """Move Rick to a random position when Morty ate a Rick
@@ -49,8 +49,8 @@ class Morty:
         self.parent_screen = parent_screen
         self.block = pygame.image.load(
             "resources/rickandmorty/morty.png").convert()
-        self.block_x = [SIZE+10]*length
-        self.block_y = [3*SIZE+10]*length
+        self.block_x = [10*SIZE+10]*length
+        self.block_y = [9*SIZE+10]*length
 
         self.direction = 'down'
         self.right = True
@@ -298,7 +298,7 @@ class Game:
 
     def run(self):
         
-        # print(self.f.read())
+        
         running = True
         pause = False
         while running:
@@ -321,6 +321,8 @@ class Game:
                         time.sleep(5)
                         running = False
                     if event.key == K_RETURN:
+                        self.speed = 0.3
+                        self.speed_level = 1
                         self.play_sound("KILL")
                         time.sleep(2)
                         pygame.mixer.music.unpause()
