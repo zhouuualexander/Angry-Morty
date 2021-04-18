@@ -27,8 +27,10 @@ class Rick:
         """Move Rick to a random position when Morty ate a Rick
         """
         # Set the position of Rick randomly
-        self.block_x = random.randint(0, 10)*SIZE+10
-        self.block_y = random.randint(0, 10)*SIZE+10
+        self.block_x = random.randint(3, 24)*SIZE+10
+        self.block_y = random.randint(3, 19)*SIZE+10
+        # self.block_x = 1066
+        # self.block_y = 846
 
     def draw(self):
         """Draw a Rick on the screen
@@ -48,7 +50,7 @@ class Morty:
         self.block = pygame.image.load(
             "resources/rickandmorty/morty.png").convert()
         self.block_x = [SIZE+10]*length
-        self.block_y = [SIZE+10]*length
+        self.block_y = [3*SIZE+10]*length
 
         self.direction = 'down'
         self.right = True
@@ -63,7 +65,10 @@ class Morty:
 
     def draw(self):
         self.parent_screen.fill((255, 255, 255))
-        pygame.draw.rect(self.parent_screen,(0,0,0),(0,0,1500,1000),10)
+        pygame.draw.rect(self.parent_screen,(0,0,0),(0,132,1120,900),10)
+       
+        
+
         for i in range(self.length):
             self.parent_screen.blit(
                 self.block, (self.block_x[i], self.block_y[i]))
@@ -137,7 +142,7 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('Crazy Morty')
-        self.surface = pygame.display.set_mode(size=(1500, 1000))
+        self.surface = pygame.display.set_mode(size=(1120, 900))
         pygame.mixer.init()
         
         
@@ -175,10 +180,11 @@ class Game:
         
         if self.morty.length-1 > self.best_score:
                 self.best_score = self.morty.length-1
-                
+              
         self.morty.walk()
         self.rick.draw()
         self.display_score()
+        self.display_title() 
         pygame.display.flip()
         # Morty killing Rick
         if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.rick.block_x, self.rick.block_y):
@@ -193,7 +199,7 @@ class Game:
                 self.play_sound("LOSE")
                 raise "game over"
         # Rick colliding with the boundries of the window
-        if not (0 <= self.morty.block_x[0] <= 1500 and 0 <= self.morty.block_y[0] <= 1000):
+        if not (0 <= self.morty.block_x[0] <= 1100 and 142 <= self.morty.block_y[0] <= 900):
             self.play_sound('LOSE')
             raise "Hit the boundry error"
     def pause(self):
@@ -202,27 +208,32 @@ class Game:
         line1 = font.render(
             f"Pause for a second and press Enter to continue", True, (
                 0, 0, 0))
-        self.surface.blit(line1, (500, 400))
+        self.surface.blit(line1, (300, 400))
         
         pygame.display.flip()
 
         pygame.mixer.music.pause()
-
+    def display_title(self):
+        font = pygame.font.Font('resources/font/get_schwifty.ttf',50)
+        title = font.render(
+                "Crazy  Morty", True, (0,0,0)
+        )
+        self.surface.blit(title, (200, 30))
     def display_score(self):
         font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         numberRicks = self.morty.length-1
         if numberRicks>1:
             score = font.render(
                 f"Morty killed: {numberRicks} Ricks", True, (0, 0, 0))
-            self.surface.blit(score, (1100, 20))
+            self.surface.blit(score, (800, 30))
         score = font.render(
                 f"Morty killed: {numberRicks} Rick", True, (0, 0, 0))
-        self.surface.blit(score, (1100, 20))
+        self.surface.blit(score, (800, 30))
 
         best = font.render(
                 f"Best killed {self.best_score} ", True, (0,0,0)
         )
-        self.surface.blit(best, (1100, 70))
+        self.surface.blit(best, (800, 80))
         
         
 
@@ -247,12 +258,12 @@ class Game:
         line1 = font.render(
             f"Wubba Lubba Dub-Dub!!! You just killed {self.morty.length-1} Rick", True, (
                 255, 255, 255))
-        self.surface.blit(line1, (500, 400))
+        self.surface.blit(line1, (350, 350))
         line2 = font.render(
             "To kill Rick again press Enter. To give up press Escape!", True, (
                 255, 255, 255)
         )
-        self.surface.blit(line2, (450, 450))
+        self.surface.blit(line2, (300, 400))
         pygame.display.flip()
 
         pygame.mixer.music.pause()
