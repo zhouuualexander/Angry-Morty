@@ -28,9 +28,9 @@ class Rick:
         """
         # Set the position of Rick randomly
         self.block_x = random.randint(3, 24)*SIZE+10
-        self.block_y = random.randint(3, 19)*SIZE+10
+        self.block_y = random.randint(3, 17)*SIZE+10
         # self.block_x = 1066
-        # self.block_y = 846
+        # self.block_y = 758
 
     def draw(self):
         """Draw a Rick on the screen
@@ -65,7 +65,7 @@ class Morty:
 
     def draw(self):
         self.parent_screen.fill((255, 255, 255))
-        pygame.draw.rect(self.parent_screen,(0,0,0),(0,132,1120,900),10)
+        pygame.draw.rect(self.parent_screen,(0,0,0),(0,132,1120,812),10)
        
         
 
@@ -142,7 +142,7 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('Crazy Morty')
-        self.surface = pygame.display.set_mode(size=(1120, 900))
+        self.surface = pygame.display.set_mode(size=(1120, 812))
         pygame.mixer.init()
         
         
@@ -199,7 +199,7 @@ class Game:
                 self.play_sound("LOSE")
                 raise "game over"
         # Rick colliding with the boundries of the window
-        if not (0 <= self.morty.block_x[0] <= 1100 and 142 <= self.morty.block_y[0] <= 900):
+        if not (0 <= self.morty.block_x[0] <= 1100 and 142 <= self.morty.block_y[0] <= 768):
             self.play_sound('LOSE')
             raise "Hit the boundry error"
     def pause(self):
@@ -208,7 +208,7 @@ class Game:
         line1 = font.render(
             f"Pause for a second and press Enter to continue", True, (
                 0, 0, 0))
-        self.surface.blit(line1, (300, 400))
+        self.surface.blit(line1, (300, 350))
         
         pygame.display.flip()
 
