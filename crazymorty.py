@@ -144,7 +144,7 @@ class Game:
         pygame.display.set_caption('Crazy Morty')
         self.surface = pygame.display.set_mode(size=(1120, 812))
         pygame.mixer.init()
-        
+        self.speed_level = 1
         self.speed = 0.3
         self.surface.fill((255, 255, 255))
         self.play_background_music()
@@ -204,6 +204,8 @@ class Game:
             self.play_sound('LOSE')
             raise "Hit the boundry error"
     def pause(self):
+        self.speed = 0.3
+        self.speed_level = 1
         self.surface.fill((255, 255, 255))
         font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         line1 = font.render(
@@ -223,13 +225,18 @@ class Game:
     def display_speed(self):
         font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         speed_up = font.render(
-                "To speed up Press U", True, (0,0,0)
+                "To speed up Press F", True, (0,0,0)
         )
         self.surface.blit(speed_up, (500, 30))
         speed_down = font.render(
-                "To slow down Press P", True, (0,0,0)
+                "To slow down Press S", True, (0,0,0)
         )
         self.surface.blit(speed_down, (500, 80))
+        show_speed = font.render(
+                f"Speed: {self.speed_level}", True, (0,0,0)
+        )
+        self.surface.blit(show_speed, (550, 55))
+
 
 
     def display_score(self):
@@ -260,6 +267,8 @@ class Game:
         pygame.mixer.Sound.play(sound)
 
     def show_game_over(self):
+        self.speed = 0.3
+        self.speed_level = 1
         if self.morty.length-1 > self.best_score:
             self.best_score = self.morty.length-1
         f = open("best_score.txt", "w")
@@ -284,6 +293,8 @@ class Game:
     def reset(self):
         self.morty = Morty(self.surface, 1)
         self.rick = Rick(self.surface)
+        self.speed_level = 1
+        self.speed = 0.3
 
     def run(self):
         
@@ -293,12 +304,14 @@ class Game:
         while running:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
-                    if event.key == K_u:
+                    if event.key == K_f:
                         if self.speed >0.1:
                             self.speed -=0.01
-                    if event.key == K_p:
+                            self.speed_level += 1
+                    if event.key == K_s:
                         if self.speed< 0.3:
                             self.speed += 0.01
+                            self.speed_level -= 1
                     if event.key == K_SPACE:
                         self.pause()
                         self.play_sound("PAUSE")
@@ -312,16 +325,16 @@ class Game:
                         time.sleep(2)
                         pygame.mixer.music.unpause()
                         pause = False
-                    if event.key == K_RIGHT or event.key == K_d:
+                    if event.key == K_RIGHT:
                         if self.morty.right:
                             self.morty.move_right()
-                    if event.key == K_LEFT or event.key == K_a:
+                    if event.key == K_LEFT:
                         if self.morty.left:
                             self.morty.move_left()
-                    if event.key == K_UP or event.key == K_w:
+                    if event.key == K_UP:
                         if self.morty.up:
                             self.morty.move_up()
-                    if event.key == K_DOWN or event.key == K_s:
+                    if event.key == K_DOWN:
                         if self.morty.down:
                             self.morty.move_down()
 
