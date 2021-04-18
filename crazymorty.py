@@ -37,7 +37,7 @@ class Rick:
         self.parent_screen.blit(
             self.rick, (self.block_x, self.block_y))
         # Update the screen
-        pygame.display.flip()
+        # pygame.display.flip()
 
 
 class Morty:
@@ -67,7 +67,7 @@ class Morty:
         for i in range(self.length):
             self.parent_screen.blit(
                 self.block, (self.block_x[i], self.block_y[i]))
-        pygame.display.flip()
+        # pygame.display.flip()
 
     def move_up(self):
         self.direction = 'up'
