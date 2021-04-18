@@ -145,7 +145,7 @@ class Game:
         self.surface = pygame.display.set_mode(size=(1120, 812))
         pygame.mixer.init()
         
-        
+        self.speed = 0.3
         self.surface.fill((255, 255, 255))
         self.play_background_music()
         self.morty = Morty(self.surface, 1)
@@ -183,6 +183,7 @@ class Game:
               
         self.morty.walk()
         self.rick.draw()
+        self.display_speed()
         self.display_score()
         self.display_title() 
         pygame.display.flip()
@@ -218,7 +219,19 @@ class Game:
         title = font.render(
                 "Crazy  Morty", True, (0,0,0)
         )
-        self.surface.blit(title, (200, 30))
+        self.surface.blit(title, (120, 30))
+    def display_speed(self):
+        font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
+        speed_up = font.render(
+                "To speed up Press U", True, (0,0,0)
+        )
+        self.surface.blit(speed_up, (500, 30))
+        speed_down = font.render(
+                "To slow down Press P", True, (0,0,0)
+        )
+        self.surface.blit(speed_down, (500, 80))
+
+
     def display_score(self):
         font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         numberRicks = self.morty.length-1
@@ -280,6 +293,12 @@ class Game:
         while running:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
+                    if event.key == K_u:
+                        if self.speed >0.1:
+                            self.speed -=0.01
+                    if event.key == K_p:
+                        if self.speed< 0.3:
+                            self.speed += 0.01
                     if event.key == K_SPACE:
                         self.pause()
                         self.play_sound("PAUSE")
@@ -319,7 +338,7 @@ class Game:
                 self.play_sound("GAMEOVER")
                 pause = True
                 self.reset()
-            time.sleep(0.3)
+            time.sleep(self.speed)
 
 
 if __name__ == '__main__':
