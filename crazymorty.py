@@ -31,6 +31,7 @@ class Rick:
         self.block_y = random.randint(3, 17)*SIZE+10
         # self.block_x = 1066
         # self.block_y = 758
+        return self.block_x, self.block_y
 
     def draw(self):
         """Draw a Rick on the screen
@@ -189,10 +190,25 @@ class Game:
         pygame.display.flip()
         # Morty killing Rick
         if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.rick.block_x, self.rick.block_y):
+            count = 0
             rick_sounds = str(random.randint(1, 13))
             self.play_rick_sound(rick_sounds)
             self.morty.increace_length()
-            self.rick.move()
+            x,y = self.rick.move()
+            occupied = True
+            #Check whether Rick's new position is conflit with Mortys,if yes, randomly generate a new position for Rick until no conflit happen.
+            while occupied:
+                for i in range(0, self.morty.length):
+                    if self.is_collision(x, y, self.morty.block_x[i], self.morty.block_y[i]):
+                        x,y = self.rick.move()
+                        occupied = True
+                        count = 1
+                if count == 0:
+                    occupied = False
+                count = 0
+                
+
+
             
         # Morty killing himself
         for i in range(3, self.morty.length):
