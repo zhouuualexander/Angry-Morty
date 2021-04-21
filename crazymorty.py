@@ -147,6 +147,8 @@ class Game:
         pygame.mixer.init()
         self.speed_level = 1
         self.speed = 0.3
+        self.firstpageImg = pygame.image.load("resources/img/Startpage.jpeg")
+        
         self.surface.fill((255, 255, 255))
         self.play_background_music()
         self.morty = Morty(self.surface, 1)
@@ -171,17 +173,21 @@ class Game:
                 return True
         return False
 
+    def play_game_music(self):
+        pygame.mixer.music.load(
+            "resources/rickandmorty/rickandmorty.mp3")
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(1)
     def play_background_music(self):
         pygame.mixer.music.load(
             "resources/rickandmorty/rickandmorty_beginning.mp3")
-        pygame.mixer.music.play()
-        pygame.mixer.music.set_volume(0.1)
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(0.5)
 
     def play(self):
         
         if self.morty.length-1 > self.best_score:
-                self.best_score = self.morty.length-1
-              
+            self.best_score = self.morty.length-1
         self.morty.walk()
         self.rick.draw()
         self.display_speed()
@@ -311,11 +317,59 @@ class Game:
         self.rick = Rick(self.surface)
         self.speed_level = 1
         self.speed = 0.3
+    def startpage(self):
+        self.play_background_music()
+        self.surface.blit(self.firstpageImg, (0,0))
+        prompt_font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
+        prompt1 = prompt_font.render(
+            f"To start killing Rick, press Enter", True, (
+                255, 255, 255))
+        self.surface.blit(prompt1, (425, 250))
+        prompt2 = prompt_font.render(
+            f"To end the game, press Escape", True, (
+                255, 255, 255))
+        self.surface.blit(prompt2, (425, 300))
+        title_font = pygame.font.Font('resources/font/get_schwifty.ttf',50)
+        title = title_font.render("Crazy Morty", True, (225,225,225))
+        self.surface.blit(title, (450,100))
+        pygame.display.flip()
+        start = True
+        while start:
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                        if event.key == K_RETURN:
+                            self.reset()
+                            self.play_sound("KILL")
+                            return True
+                        if event.key == K_ESCAPE:
+                            self.play_sound("QUIT")
+                            time.sleep(1.2)
+                            return False
+                elif event.type == QUIT:
+                    self.play_sound("QUIT")
+                    time.sleep(1.2)
+                    return False
+                    
+    # def startagain(self):
+    #     self.surface.blit(self.firstpageImg, (0,0))
+        
+    #     pygame.display.flip()
+    #     start = True
+    #     while start:
+    #         for event in pygame.event.get():
+    #             if event.type == KEYDOWN:
+    #                     if event.key == K_m:
+    #                         self.reset()
+    #                         self.run(True)
+    #             elif event.type == QUIT:
+    #                 self.play_sound("QUIT")
+    #                 time.sleep(4)
+    #                 start = False
 
-    def run(self):
-        
-        
-        running = True
+    def run(self,running):
+        self.play_game_music()
+
+        # running = True
         pause = False
         while running:
             for event in pygame.event.get():
@@ -334,7 +388,7 @@ class Game:
                         pause = True
                     if event.key == K_ESCAPE:
                         self.play_sound("GIVEUP")
-                        time.sleep(5)
+                        
                         running = False
                     if event.key == K_RETURN:
                         self.speed = 0.3
@@ -374,4 +428,7 @@ class Game:
 
 if __name__ == '__main__':
     game = Game()
-    game.run()
+    running = game.startpage()
+    while running:
+        game.run(running)
+        running = game.startpage()
