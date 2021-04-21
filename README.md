@@ -67,7 +67,7 @@ Morty's image<br>
 
 MIT License
 
-Copyright (c) [2021] [Zijian Zhou (Alex Zhou)]
+Copyright (c) 2021 Zijian Zhou (Alex Zhou)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
