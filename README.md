@@ -1,7 +1,7 @@
 # Pygame----Crazy Morty
 
-![Project Image](https://github.com/zhouuualexander/pygame_snake/blob/master/resources/rickandmorty/Demo.png)
-
+![Project Start Page](https://github.com/zhouuualexander/pygame_snake/blob/master/resources/rickandmorty/Demo1.png)
+![Project Image](https://github.com/zhouuualexander/pygame_snake/blob/master/resources/rickandmorty/Demo2.png)
 > This is a modified version of Snake game with Rick and Morty theme.
 
 ---
