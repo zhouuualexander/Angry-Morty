@@ -155,6 +155,7 @@ class Game:
         self.morty.draw()
         self.rick = Rick(self.surface)
         self.rick.draw()
+        self.zen_mode = False
         
         try:
             self.f = open("best_score.txt", "r")
@@ -239,25 +240,34 @@ class Game:
 
         pygame.mixer.music.pause()
     def display_title(self):
-        font = pygame.font.Font('resources/font/get_schwifty.ttf',50)
-        title = font.render(
-                "Crazy  Morty", True, (0,0,0)
-        )
+        if not self.zen_mode:
+            font = pygame.font.Font('resources/font/get_schwifty.ttf',50)
+            title = font.render(
+                    "Crazy  Morty", True, (0,0,0)
+            )
+        if self.zen_mode:
+            font = pygame.font.Font('resources/font/get_schwifty.ttf',50)
+            title = font.render(
+                    "Zen  Mode", True, (0,0,0)
+            )
         self.surface.blit(title, (120, 30))
     def display_speed(self):
-        font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
-        speed_up = font.render(
-                "To speed up Press F", True, (0,0,0)
-        )
-        self.surface.blit(speed_up, (500, 30))
-        speed_down = font.render(
-                "To slow down Press S", True, (0,0,0)
-        )
-        self.surface.blit(speed_down, (500, 80))
-        show_speed = font.render(
-                f"Speed: {self.speed_level}", True, (0,0,0)
-        )
-        self.surface.blit(show_speed, (550, 55))
+        
+        if self.zen_mode:
+            font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
+            speed_up = font.render(
+                    "To speed up Press F", True, (0,0,0)
+            )
+            self.surface.blit(speed_up, (500, 30))
+            speed_down = font.render(
+                    "To slow down Press S", True, (0,0,0)
+            )
+            self.surface.blit(speed_down, (500, 80))
+            show_speed = font.render(
+                    f"Speed: {self.speed_level}", True, (0,0,0)
+            )
+            self.surface.blit(show_speed, (550, 55))
+
 
 
 
@@ -313,6 +323,7 @@ class Game:
         pygame.mixer.music.pause()
 
     def reset(self):
+        self.zen_mode = False
         self.morty = Morty(self.surface, 1)
         self.rick = Rick(self.surface)
         self.speed_level = 1
@@ -322,13 +333,17 @@ class Game:
         self.surface.blit(self.firstpageImg, (0,0))
         prompt_font = pygame.font.Font('resources/font/rick_and_morty.ttf',30)
         prompt1 = prompt_font.render(
-            f"To start killing Rick, press Enter", True, (
+            "To start killing Rick, press Enter", True, (
                 255, 255, 255))
         self.surface.blit(prompt1, (425, 250))
         prompt2 = prompt_font.render(
-            f"To end the game, press Escape", True, (
+            "To end the game, press Escape", True, (
                 255, 255, 255))
         self.surface.blit(prompt2, (425, 300))
+        zen = prompt_font.render(
+            "Zen Mode, press Z", True, (255,255,255)
+        )
+        self.surface.blit(zen, (100, 500))
         title_font = pygame.font.Font('resources/font/get_schwifty.ttf',50)
         title = title_font.render("Crazy Morty", True, (225,225,225))
         self.surface.blit(title, (450,100))
@@ -341,6 +356,12 @@ class Game:
                             self.reset()
                             self.play_sound("KILL")
                             return True
+                        if event.key == K_z:
+                            self.reset()
+                            self.zen_mode = True
+                            
+                            self.play_sound("KILL")
+                            return True
                         if event.key == K_ESCAPE:
                             self.play_sound("QUIT")
                             time.sleep(1.2)
@@ -349,22 +370,6 @@ class Game:
                     self.play_sound("QUIT")
                     time.sleep(1.2)
                     return False
-                    
-    # def startagain(self):
-    #     self.surface.blit(self.firstpageImg, (0,0))
-        
-    #     pygame.display.flip()
-    #     start = True
-    #     while start:
-    #         for event in pygame.event.get():
-    #             if event.type == KEYDOWN:
-    #                     if event.key == K_m:
-    #                         self.reset()
-    #                         self.run(True)
-    #             elif event.type == QUIT:
-    #                 self.play_sound("QUIT")
-    #                 time.sleep(4)
-    #                 start = False
 
     def run(self,running):
         self.play_game_music()
@@ -374,14 +379,15 @@ class Game:
         while running:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
-                    if event.key == K_f:
-                        if self.speed >0.1:
-                            self.speed -=0.01
-                            self.speed_level += 1
-                    if event.key == K_s:
-                        if self.speed< 0.3:
-                            self.speed += 0.01
-                            self.speed_level -= 1
+                    if self.zen_mode:
+                        if event.key == K_f:
+                            if self.speed >0.1:
+                                self.speed -=0.01
+                                self.speed_level += 1
+                        if event.key == K_s:
+                            if self.speed< 0.3:
+                                self.speed += 0.01
+                                self.speed_level -= 1
                     if event.key == K_SPACE:
                         self.pause()
                         self.play_sound("PAUSE")
@@ -422,7 +428,11 @@ class Game:
                 time.sleep(5)
                 self.play_sound("GAMEOVER")
                 pause = True
-                self.reset()
+                if self.zen_mode == True:
+                    self.reset()
+                    self.zen_mode = True
+                if self.zen_mode == False:
+                    self.reset()
             time.sleep(self.speed)
 
 
