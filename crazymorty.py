@@ -191,6 +191,7 @@ class Game:
         self.rick = Rick(self.surface)
         self.rick.draw()
         self.zen_mode = False
+        self.quit = False
 
         try:
             self.f = open("best_score.txt", "r")
@@ -448,8 +449,9 @@ class Game:
 
                 elif event.type == QUIT:
                     self.play_sound("QUIT")
-                    time.sleep(4)
+                    time.sleep(1.2)
                     running = False
+                    self.quit = True
             try:
                 if not pause:
                     self.play()
@@ -471,4 +473,6 @@ if __name__ == '__main__':
     running = game.startpage()
     while running:
         game.run(running)
+        if game.quit == True:
+            break
         running = game.startpage()
