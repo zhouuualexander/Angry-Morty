@@ -190,7 +190,7 @@ class Game:
         self.morty.draw()
         self.rick = Rick(self.surface)
         self.rick.draw()
-        self.zen_mode = False
+        self.crazy_mode = False
         self.quit = False
 
         try:
@@ -275,21 +275,21 @@ class Game:
         pygame.mixer.music.pause()
 
     def display_title(self):
-        if not self.zen_mode:
+        if not self.crazy_mode:
             font = pygame.font.Font('resources/font/get_schwifty.ttf', 50)
             title = font.render(
                 "Crazy  Morty", True, (0, 0, 0)
             )
-        if self.zen_mode:
+        if self.crazy_mode:
             font = pygame.font.Font('resources/font/get_schwifty.ttf', 50)
             title = font.render(
-                "Zen  Mode", True, (0, 0, 0)
+                "Crazy  Mode", True, (0, 0, 0)
             )
         self.surface.blit(title, (120, 30))
 
     def display_speed(self):
 
-        if self.zen_mode:
+        if not self.crazy_mode:
             font = pygame.font.Font('resources/font/rick_and_morty.ttf', 30)
             speed_up = font.render(
                 "To speed up Press F", True, (0, 0, 0)
@@ -303,6 +303,18 @@ class Game:
                 f"Speed: {self.speed_level}", True, (0, 0, 0)
             )
             self.surface.blit(show_speed, (550, 55))
+        if self.crazy_mode:
+            font = pygame.font.Font('resources/font/rick_and_morty.ttf', 30)
+            crazy_speed1 = font.render(
+                "Morty speed will be automatically", True, (
+                    0, 0, 0)
+            )
+            self.surface.blit(crazy_speed1, (450, 30))
+            crazy_speed2 = font.render(
+                "increased without controlling!", True, (
+                    0, 0, 0)
+            )
+            self.surface.blit(crazy_speed2, (450, 80))
 
     def display_score(self):
         font = pygame.font.Font('resources/font/rick_and_morty.ttf', 30)
@@ -353,7 +365,7 @@ class Game:
         pygame.mixer.music.pause()
 
     def reset(self):
-        self.zen_mode = False
+        self.crazy_mode = False
         self.morty = Morty(self.surface, 1)
         self.rick = Rick(self.surface)
         self.speed_level = 1
@@ -371,10 +383,10 @@ class Game:
             "To end the game, press Escape", True, (
                 255, 255, 255))
         self.surface.blit(prompt2, (425, 300))
-        zen = prompt_font.render(
-            "Zen Mode, press Z", True, (255, 255, 255)
+        crazy = prompt_font.render(
+            "Crazy Mode, press C", True, (255, 255, 255)
         )
-        self.surface.blit(zen, (100, 500))
+        self.surface.blit(crazy, (100, 500))
         title_font = pygame.font.Font('resources/font/get_schwifty.ttf', 50)
         title = title_font.render("Crazy Morty", True, (225, 225, 225))
         self.surface.blit(title, (450, 100))
@@ -387,9 +399,9 @@ class Game:
                         self.reset()
                         self.play_sound("KILL")
                         return True
-                    if event.key == K_z:
+                    if event.key == K_c:
                         self.reset()
-                        self.zen_mode = True
+                        self.crazy_mode = True
 
                         self.play_sound("KILL")
                         return True
@@ -410,7 +422,7 @@ class Game:
         while running:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
-                    if self.zen_mode:
+                    if not self.crazy_mode:
                         if event.key == K_f:
                             if self.speed > 0.1:
                                 self.speed -= 0.01
@@ -460,12 +472,56 @@ class Game:
                 time.sleep(5)
                 self.play_sound("GAMEOVER")
                 pause = True
-                if self.zen_mode == True:
+                if self.crazy_mode == True:
                     self.reset()
-                    self.zen_mode = True
-                if self.zen_mode == False:
+                    self.crazy_mode = True
+                if self.crazy_mode == False:
                     self.reset()
-            time.sleep(self.speed)
+            if not self.crazy_mode:
+                time.sleep(self.speed)
+            if self.crazy_mode:
+                if self.morty.length <= 5:
+                    time.sleep(0.3)
+                elif self.morty.length > 5 and self.morty.length <= 10:
+                    time.sleep(0.29)
+                elif self.morty.length > 10 and self.morty.length <= 15:
+                    time.sleep(0.28)
+                elif self.morty.length > 15 and self.morty.length <= 20:
+                    time.sleep(0.27)
+                elif self.morty.length > 20 and self.morty.length <= 25:
+                    time.sleep(0.26)
+                elif self.morty.length > 25 and self.morty.length <= 30:
+                    time.sleep(0.25)
+                elif self.morty.length > 30 and self.morty.length <= 35:
+                    time.sleep(0.24)
+                elif self.morty.length > 35 and self.morty.length <= 40:
+                    time.sleep(0.23)
+                elif self.morty.length > 40 and self.morty.length <= 45:
+                    time.sleep(0.22)
+                elif self.morty.length > 45 and self.morty.length <= 50:
+                    time.sleep(0.21)
+                elif self.morty.length > 50 and self.morty.length <= 55:
+                    time.sleep(0.20)
+                elif self.morty.length > 55 and self.morty.length <= 60:
+                    time.sleep(0.19)
+                elif self.morty.length > 60 and self.morty.length <= 65:
+                    time.sleep(0.18)
+                elif self.morty.length > 65 and self.morty.length <= 70:
+                    time.sleep(0.17)
+                elif self.morty.length > 70 and self.morty.length <= 75:
+                    time.sleep(0.16)
+                elif self.morty.length > 75 and self.morty.length <= 80:
+                    time.sleep(0.15)
+                elif self.morty.length > 80 and self.morty.length <= 85:
+                    time.sleep(0.14)
+                elif self.morty.length > 85 and self.morty.length <= 90:
+                    time.sleep(0.13)
+                elif self.morty.length > 90 and self.morty.length <= 95:
+                    time.sleep(0.12)
+                elif self.morty.length > 95 and self.morty.length <= 100:
+                    time.sleep(0.11)
+                else:
+                    time.sleep(0.1)
 
 
 if __name__ == '__main__':
