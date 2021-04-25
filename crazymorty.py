@@ -175,32 +175,62 @@ class Morty:
 
 
 class Game:
+    """Game object
+    The game has two modes: 
+        Normal mode, which user can control Morty's speed.
+        Angry mode, which user cannot control Mortys's speed and the speed is increased.
+    """
+
     def __init__(self):
+        """Initialize the game
+        """
+        # Initialize all imported pygame modules
         pygame.init()
+        # Set the current window caption
         pygame.display.set_caption('Crazy Morty')
+        # Initialize a window or screen for display
         self.surface = pygame.display.set_mode(size=(1120, 812))
+        # Initialize the mixer module, where the mixer module is a pygame module for loading and playing sounds
         pygame.mixer.init()
+        # Set the initial speed level to minimal, which is 1 in the normal mode of game.
+        # The maximal level of this game is 21, which is super fast
         self.speed_level = 1
+        # Set the minimal speed to 0.3. 0.3 means the game will draw a new Morty after 0.3 second as an update
         self.speed = 0.3
-        self.firstpageImg = pygame.image.load("resources/img/Startpage.jpeg")
-
+        # Load the img of the startpage image
+        self.startpageImg = pygame.image.load("resources/img/Startpage.jpeg")
+        # Set the window to white color
         self.surface.fill((255, 255, 255))
+        # Start play_background_music
         self.play_background_music()
+        # Get a instance Morty from the object Morty and set the length of Morty to 1
         self.morty = Morty(self.surface, 1)
+        # Draw a Morty
         self.morty.draw()
+        # Get a instance Rick from the object Rick and set the length of Morty to 1
         self.rick = Rick(self.surface)
+        # Draw a Rick
         self.rick.draw()
+        # Set Angry mode to be False first
         self.angry_mode = False
+        # Set the game not quitting first
         self.quit = False
-
+        # Try to open a text file for recording the best score, if it does not exist, then create one
         try:
+            # Open the file with reading mode
             self.f = open("best_score.txt", "r")
+            # Assign the score to variable self.best_score to display on the screen
             self.best_score = int(self.f.read())
+            # Close the file
             self.f.close()
         except:
+            # Open the file with writing mode
             self.f = open("best_score.txt", "w")
+            # Write the initial mark to be 0
             self.f.write('0')
+            # Set the initial mark to be 0
             self.best_score = 0
+            # Close the file
             self.f.close()
 
     def is_collision(self, x1, y1, x2, y2):
@@ -373,7 +403,7 @@ class Game:
 
     def startpage(self):
         self.play_background_music()
-        self.surface.blit(self.firstpageImg, (0, 0))
+        self.surface.blit(self.startpageImg, (0, 0))
         prompt_font = pygame.font.Font('resources/font/rick_and_morty.ttf', 30)
         prompt1 = prompt_font.render(
             "To start killing Rick, press Enter", True, (
