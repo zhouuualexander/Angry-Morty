@@ -201,8 +201,8 @@ class Game:
         self.startpageImg = pygame.image.load("resources/img/Startpage.jpeg")
         # Set the window to white color
         self.surface.fill((255, 255, 255))
-        # Start play_background_music
-        self.play_background_music()
+        # Start play_music
+        self.play_music('rickandmorty_beginning', -1, 0.5)
         # Get a instance Morty from the object Morty and set the length of Morty to 1
         self.morty = Morty(self.surface, 1)
         # Draw a Morty
@@ -234,22 +234,32 @@ class Game:
             self.f.close()
 
     def is_collision(self, x1, y1, x2, y2):
+        """Checking if Morty's head have collision with Rick
+
+        Args:
+            x1 (int): Morty's head x coordinate
+            y1 (int): Morty's head y coordinate
+            x2 (int): Rick's x coordinate
+            y2 (int): Rick's y coordinate
+
+        Returns:
+            boolean: if collide, return True, otherwise return False
+        """
         if x1 >= x2 and x1 < x2+SIZE:
             if y1 >= y2 and y1 < y2+SIZE:
                 return True
         return False
 
-    def play_game_music(self):
+    def play_music(self, music, num_loop, volume):
+        """Play game's background music
+        """
+        # Loading game's background music
         pygame.mixer.music.load(
-            "resources/rickandmorty/rickandmorty.mp3")
-        pygame.mixer.music.play(loops=-1)
-        pygame.mixer.music.set_volume(1)
-
-    def play_background_music(self):
-        pygame.mixer.music.load(
-            "resources/rickandmorty/rickandmorty_beginning.mp3")
-        pygame.mixer.music.play(loops=-1)
-        pygame.mixer.music.set_volume(0.5)
+            f"resources/rickandmorty/{music}.mp3")
+        # Play game's background music num_loop time
+        pygame.mixer.music.play(loops=num_loop)
+        # Set the volume
+        pygame.mixer.music.set_volume(volume)
 
     def play(self):
 
@@ -402,7 +412,7 @@ class Game:
         self.speed = 0.3
 
     def startpage(self):
-        self.play_background_music()
+        self.play_music('rickandmorty_beginning', -1, 0.5)
         self.surface.blit(self.startpageImg, (0, 0))
         prompt_font = pygame.font.Font('resources/font/rick_and_morty.ttf', 30)
         prompt1 = prompt_font.render(
@@ -445,7 +455,7 @@ class Game:
                     return False
 
     def run(self, running):
-        self.play_game_music()
+        self.play_music('rickandmorty', -1, 1)
 
         # running = True
         pause = False
