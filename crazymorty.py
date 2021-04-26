@@ -262,14 +262,22 @@ class Game:
         pygame.mixer.music.set_volume(volume)
 
     def play(self):
-
+        """Control the play of the game
+        """
+        # Update the best score of Morty
         if self.morty.length-1 > self.best_score:
             self.best_score = self.morty.length-1
+        # Walk Morty
         self.morty.walk()
+        # Draw a Rick
         self.rick.draw()
+        # Display the speed on the screen unless you are in Angry mode
         self.display_speed()
+        # Display the best score
         self.display_score()
+        # Display the title of the game, i.e. either Crazy Morty or Angry Mode
         self.display_title()
+        # Update the screen
         pygame.display.flip()
         # Morty killing Rick
         if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.rick.block_x, self.rick.block_y):
@@ -295,10 +303,10 @@ class Game:
             if self.is_collision(self.morty.block_x[0], self.morty.block_y[0], self.morty.block_x[i], self.morty.block_y[i]):
                 self.play_sound("LOSE")
                 raise "game over"
-        # Rick colliding with the boundries of the window
+        # Rick colliding with the boundaries of the window
         if not (0 <= self.morty.block_x[0] <= 1100 and 142 <= self.morty.block_y[0] <= 768):
             self.play_sound('LOSE')
-            raise "Hit the boundry error"
+            raise "Hit the boundary error"
 
     def pause(self):
         self.speed = 0.3
