@@ -187,7 +187,7 @@ class Game:
         # Initialize all imported pygame modules
         pygame.init()
         # Set the current window caption
-        pygame.display.set_caption('Crazy Morty')
+        pygame.display.set_caption('Angry Morty')
         # Initialize a window or screen for display
         self.surface = pygame.display.set_mode(size=(1120, 812))
         # Initialize the mixer module, where the mixer module is a pygame module for loading and playing sounds
@@ -275,7 +275,7 @@ class Game:
         self.display_speed()
         # Display the best score
         self.display_score()
-        # Display the title of the game, i.e. either Crazy Morty or Angry Mode
+        # Display the title of the game, i.e. either Angry Morty or Angry Mode
         self.display_title()
         # Update the screen
         pygame.display.flip()
