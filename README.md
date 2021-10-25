@@ -1,4 +1,4 @@
-# Pygame----Crazy Morty
+# Pygame----Angry Morty
 
 ![Project Start Page](https://github.com/zhouuualexander/pygame_snake/blob/master/resources/rickandmorty/Demo1.png)
 ![Project Image](https://github.com/zhouuualexander/pygame_snake/blob/master/resources/rickandmorty/Demo2.png)
@@ -7,7 +7,7 @@
 ---
 
 ### Table of Contents
-- [Pygame----Crazy Morty](#pygame----crazy-morty)
+- [Pygame----Angry Morty](#pygame----angry-morty)
     - [Table of Contents](#table-of-contents)
   - [Description](#description)
       - [Technologies](#technologies)
@@ -19,7 +19,7 @@
 
 ## Description
 
-Crazy Morty is a snake game with Rick and Morty theme.<br>
+Angry Morty is a snake game with Rick and Morty theme.<br>
 The code is modified and learnt from [freeCodeCamp](https://www.freecodecamp.org/) YouTube video: <br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Code a Snake Game with Python and Pygame 🐍 - Tutorial](https://www.youtube.com/watch?v=8dfePlONtls&t=4055s)
 
@@ -27,7 +27,7 @@ The code is modified and learnt from [freeCodeCamp](https://www.freecodecamp.org
 
 - pygame 2.0.1 (SDL 2.0.14, Python 3.7.3)
 
-[Back To The Top](#Pygame----Crazy-Morty)
+[Back To The Top](#Pygame----Angry-Morty)
 
 ---
 
@@ -41,7 +41,7 @@ The code is modified and learnt from [freeCodeCamp](https://www.freecodecamp.org
     python3 crazymorty.py
     
 ```
-[Back To The Top](#Pygame----Crazy-Morty)
+[Back To The Top](#Pygame----Angry-Morty)
 
 ---
 
@@ -59,7 +59,7 @@ Rick's image<br>
 Morty's image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [PNGWING](https://www.pngwing.com/en/free-png-xaxvq)<br><br>
-[Back To The Top](#Pygame----Crazy-Morty)
+[Back To The Top](#Pygame----Angry-Morty)
 
 ---
 
@@ -87,6 +87,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[Back To The Top](#Pygame----Crazy-Morty)
+[Back To The Top](#Pygame----Angry-Morty)
 
 
