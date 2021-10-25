@@ -37,7 +37,7 @@ The code is modified and learnt from [freeCodeCamp](https://www.freecodecamp.org
 ```html
     git clone this repository
     install python 3.7.3 
-    install pygame 2.0.1
+    install pygame 2.0.2
     python3 crazymorty.py
     
 ```
