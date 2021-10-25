@@ -21,7 +21,7 @@
 
 Angry Morty is a snake game with Rick and Morty theme.<br>
 The code is modified and learnt from [freeCodeCamp](https://www.freecodecamp.org/) YouTube video: <br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Code a Snake Game with Python and Pygame 🐍 - Tutorial](https://www.youtube.com/watch?v=8dfePlONtls&t=4055s)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Code a Snake Game with Python and Pygame 🐍-Tutorial](https://www.youtube.com/watch?v=8dfePlONtls&t=4055s)
 
 #### Technologies
 
